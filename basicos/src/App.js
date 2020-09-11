@@ -1,25 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Fragment, useState } from 'react';
+import Header from './components/Header'
+import Footer from './components/Footer'
+import Producto from './components/Producto'
+import Carrito from './components/Carrito'
 
 function App() {
+
+  const [productos, setProductos] = useState([
+    { id: 1, nombre: 'Camisa 1', precio: 50 },
+    { id: 2, nombre: 'Camisa 2', precio: 50 },
+    { id: 3, nombre: 'Camisa 2', precio: 50 },
+    { id: 4, nombre: 'Camisa 4', precio: 50 }
+  ]);
+
+  //State carro
+  const [carrito, setCarrito] = useState([]);
+
+  const fecha = new Date().getFullYear();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Fragment>
+      <Header
+        titulo="PAss Var"
+      />
+      <h1>        Lista Prod      </h1>
+      {
+        productos.map(map => (
+          <Producto
+            key={map.id}
+            producto={map}
+            productos={productos}
+            carrito ={carrito}
+            setCarrito={setCarrito}
+          />
+        ))
+      }
+
+      <Carrito
+      carrito ={carrito}
+      setCarrito={setCarrito}
+      />
+
+      <Footer
+        fecha={fecha}
+      />
+    </Fragment>
   );
 }
 
