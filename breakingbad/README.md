@@ -1,5 +1,5 @@
 # Breaking Bad
-1. se usa styled components npm i 
+1. se usa styled components 
 ```
-@emotion/styled @emotion/core
+npm i @emotion/styled @emotion/core
 ```
