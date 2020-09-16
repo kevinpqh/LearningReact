@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { Fragment, useEffect, useState } from 'react';
 import Cancion from './components/Cancion';
 import Formulario from './components/Formulario';
+import Info from './components/Info';
 
 function App() {
 
@@ -37,9 +38,9 @@ function App() {
       <div className="container mt-5">
             <div className="row">
               <div className="col-md-6">
-                {/* <Info 
+                <Info
                   info={info}
-                /> */}
+                />
               </div>
               <div className="col-md-6">
                   <Cancion 
