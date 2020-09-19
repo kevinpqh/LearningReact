@@ -1,16 +1,20 @@
 import React, { useContext } from 'react';
 
 import proyectoContext from '../../context/proyectos/proyectoContext';
+import tareaContext from '../../context/tareas/tareaContext';
 
 const Proyecto = ({ proyecto }) => {
 
   const proyectosContext = useContext(proyectoContext);
   const { proyectoActual } = proyectosContext;
 
+  const tareasContext = useContext(tareaContext);
+  const { obtenerTareas } = tareasContext;
+
 
   const seleccionarProyecto = id => {
     proyectoActual(id); // Fijar un proyecto actual
-    //obtenerTareas(id); // Filtrar las tareas cuando se de click
+    obtenerTareas(id); // Filtrar las tareas cuando se de click
 }
 
   return (
