@@ -3,14 +3,18 @@ const express = require('express');
 const router = express.Router();
 const { check } = require('express-validator');
 const authController = require('../controllers/authController');
+const auth = require('../middleware/auth');
 
 
-router.post('/',
-  [
-
-    check('email', 'Email no valido').isEmail(),
-    check('password', 'passsword min 6 c').isLength({ min: 6 }),
-  ], authController.autenticarUsuario
+// Iniciar sesión
+// api/auth
+router.post('/', 
+    authController.autenticarUsuario
 );
 
+// Obtiene el usuario autenticado
+router.get('/',
+    auth,
+    authController.usuarioAutenticado
+);
 module.exports = router;
