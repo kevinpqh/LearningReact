@@ -1,12 +1,29 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import AlertaContext from '../../context/alertas/alertaContext';
+import AuthContext from '../../context/autenticacion/authContext';
 
 
-const NuevaCuenta = () => {
+const NuevaCuenta = (props) => {
 
   const alertaContext = useContext(AlertaContext);
   const { alerta, mostrarAlerta } = alertaContext;
+
+  const authContext = useContext(AuthContext);
+  const { mensaje, autenticado, registrarUsuario } = authContext;
+
+  // En caso de que el usuario se haya autenticado o registrado o sea un registro duplicado
+  useEffect(() => {
+    if (autenticado) {
+      props.history.push('/proyectos');
+    }
+
+    if (mensaje) {
+      mostrarAlerta(mensaje.msg, mensaje.categoria);
+    }
+    
+    // eslint-disable-next-line
+  }, [mensaje, autenticado, props.history]);
 
   const [usuario, setUsuario] = useState({
     email: '',
@@ -46,6 +63,11 @@ const NuevaCuenta = () => {
       mostrarAlerta('Los passwords no son iguales', 'alerta-error');
       return;
     }
+    registrarUsuario({
+      nombre,
+      email,
+      password
+    });
   }
 
   return (
