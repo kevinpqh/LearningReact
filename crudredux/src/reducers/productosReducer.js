@@ -18,7 +18,7 @@ const initialState = {
     productos: [],
     error: null,
     loading: false, 
-    // productoeliminar: null,
+    productoeliminar: null,
     // productoeditar: null
 }
 
@@ -38,7 +38,7 @@ export default function(state = initialState, action) {
             }
         case AGREGAR_PRODUCTO_ERROR:
         case DESCARGA_PRODUCTOS_ERROR:
-        // case PRODUCTO_ELIMINADO_ERROR:
+        case PRODUCTO_ELIMINADO_ERROR:
         // case PRODUCTO_EDITADO_ERROR:
             return {
                 ...state,
@@ -52,17 +52,17 @@ export default function(state = initialState, action) {
                 error: null,
                 productos: action.payload
             }
-        // case OBTENER_PRODUCTO_ELIMINAR:
-        //     return {
-        //         ...state,
-        //         productoeliminar: action.payload
-        //     }
-        // case PRODUCTO_ELIMINADO_EXITO:
-        //     return {
-        //         ...state,
-        //         productos: state.productos.filter( producto => producto.id !== state.productoeliminar ),
-        //         productoeliminar: null
-        //     }
+        case OBTENER_PRODUCTO_ELIMINAR:
+            return {
+                ...state,
+                productoeliminar: action.payload
+            }
+        case PRODUCTO_ELIMINADO_EXITO:
+            return {
+                ...state,
+                productos: state.productos.filter( producto => producto.id !== state.productoeliminar ),
+                productoeliminar: null
+            }
         // case  OBTENER_PRODUCTO_EDITAR:
         //     return {
         //         ...state,

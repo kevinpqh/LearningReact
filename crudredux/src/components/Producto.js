@@ -5,12 +5,12 @@ import Swal from 'sweetalert2';
 
 // Redux
 import { useDispatch } from 'react-redux';
-//import { borrarProductoAction, obtenerProductoEditar } from '../actions/productoActions';
+import { borrarProductoAction, obtenerProductoEditar } from '../actions/productoActions';
 
 const Producto = ({ producto }) => {
   const { nombre, precio, id } = producto;
 
-  //const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const history = useHistory(); // habilitar history para redirección
 
   // Confirmar si desea eliminarlo
@@ -29,7 +29,7 @@ const Producto = ({ producto }) => {
     }).then((result) => {
       if (result.value) {
         // pasarlo al action
-       // dispatch(borrarProductoAction(id));
+        dispatch(borrarProductoAction(id));
       }
     });
   }
