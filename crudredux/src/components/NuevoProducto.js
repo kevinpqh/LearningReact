@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 //actions
 import { crearNuevoProductoAction } from '../actions/productoActions';
 
-const NuevoProducto = () => {
+const NuevoProducto = ({ history }) => {
 
   // state del componente
   const [nombre, setNombre] = useState('');
@@ -12,12 +12,17 @@ const NuevoProducto = () => {
   // utilizar use dispatch y te crea una función
   const dispatch = useDispatch();
 
+  // Acceder al state del store
+  const cargando = useSelector(state => state.productos.loading);
+  const error = useSelector(state => state.productos.error);
+  //const alerta = useSelector(state => state.alerta.alerta);
+
   const agregarProducto = producto => dispatch(crearNuevoProductoAction(producto));
 
   const submitNuevoProducto = e => {
     e.preventDefault();
 
-    if(nombre.trim() === '' || precio <= 0) {
+    if (nombre.trim() === '' || precio <= 0) {
 
       // const alerta = {
       //     msg: 'Ambos campos son obligatorios',
@@ -26,12 +31,14 @@ const NuevoProducto = () => {
       // dispatch( mostrarAlerta(alerta) );
 
       return;
-  }
+    }
 
     agregarProducto({
       nombre,
       precio
     });
+
+    history.push('/');
   }
 
   return (
@@ -73,6 +80,9 @@ const NuevoProducto = () => {
                 className="btn btn-primary font-weight-bold text-uppercase d-block w-100"
               >Agregar</button>
             </form>
+
+            {cargando ? <p>Cargando...</p> : null}
+            {error ? <p className="alert alert-danger p2 mt-4 text-center">Hubo un error</p> : null}
           </div>
         </div>
       </div>

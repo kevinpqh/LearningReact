@@ -9,3 +9,7 @@ npm install -g json-server
 ´´´
 npm i react-redux redux redux-thunk
 ´´´
+3. Sweet Alert2
+´´´
+npm i sweetalert2
+´´´
