@@ -11,14 +11,9 @@
       "id": 9
     },
     {
-      "nombre": "1",
+      "nombre": "mobre",
       "precio": 2,
       "id": 10
-    },
-    {
-      "nombre": "second",
-      "precio": 1,
-      "id": 11
     }
   ]
 }

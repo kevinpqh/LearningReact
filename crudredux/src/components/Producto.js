@@ -36,7 +36,7 @@ const Producto = ({ producto }) => {
 
   // función que redirige de forma programada
   const redireccionarEdicion = producto => {
-    //dispatch(obtenerProductoEditar(producto));
+    dispatch(obtenerProductoEditar(producto));
     history.push(`/productos/editar/${producto.id}`)
   }
 
