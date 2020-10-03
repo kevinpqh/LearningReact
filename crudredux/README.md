@@ -13,3 +13,7 @@ npm i react-redux redux redux-thunk
 ´´´
 npm i sweetalert2
 ´´´
+4. Ejecutar server
+´´´
+json-server db.js --port 4000
+´´´
