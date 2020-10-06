@@ -1,6 +1,6 @@
 import Layout from '../components/layout/Layout';
 
-const Populares = () => {
+const NuevoProducto = () => {
   return (
     <div>
       <Layout>
@@ -10,5 +10,5 @@ const Populares = () => {
   )
 }
 
-export default Populares;
+export default NuevoProducto;
 
