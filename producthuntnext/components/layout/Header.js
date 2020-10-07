@@ -30,7 +30,7 @@ const Header = () => {
 
 
   //const { usuario, firebase } = useContext(FirebaseContext);
-  const usuario = true;
+  const usuario = false;
 
   return (
     <header
