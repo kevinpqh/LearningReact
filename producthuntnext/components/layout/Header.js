@@ -5,7 +5,7 @@ import { css } from '@emotion/core';
 import Buscar from '../ui/Buscar';
 import Navegacion from './Navegacion';
 import Boton from '../ui/Boton';
-//import { FirebaseContext } from '../../firebase';
+import { FirebaseContext } from '../../firebase';
 
 const ContenedorHeader = styled.div`
     max-width: 1200px;
@@ -29,8 +29,7 @@ const Logo = styled.a`
 const Header = () => {
 
 
-  //const { usuario, firebase } = useContext(FirebaseContext);
-  const usuario = false;
+  const { usuario, firebase } = useContext(FirebaseContext);
 
   return (
     <header
@@ -63,32 +62,32 @@ const Header = () => {
           `}
         >
           {
-          usuario 
-          ? (
-            <>
-              <p
-                css={css`
+            usuario
+              ? (
+                <>
+                  <p
+                    css={css`
                   margin-right: 2rem;
                 `}
-              >Hola: sdf </p>
-              <Boton
-                bgColor="true"
-              // onClick={() => firebase.cerrarSesion()}
-              >Cerrar Sesión</Boton>
-            </>
-          ) 
-          : (
-              <>
-                <Link href="/login">
+                  >Hola: {usuario.displayName} </p>
                   <Boton
                     bgColor="true"
-                  >Login</Boton>
-                </Link>
-                <Link href="/crear-cuenta">
-                  <Boton>Crear Cuenta</Boton>
-                </Link>
-              </>
-            )}
+                    onClick={() => firebase.cerrarSesion()}
+                  >Cerrar Sesión</Boton>
+                </>
+              )
+              : (
+                <>
+                  <Link href="/login">
+                    <Boton
+                      bgColor="true"
+                    >Login</Boton>
+                  </Link>
+                  <Link href="/crear-cuenta">
+                    <Boton>Crear Cuenta</Boton>
+                  </Link>
+                </>
+              )}
         </div>
       </ContenedorHeader>
     </header>
