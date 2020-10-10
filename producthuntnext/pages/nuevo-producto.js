@@ -7,7 +7,7 @@ import { Formulario, Campo, InputSubmit, Error } from '../components/ui/Formular
 
 import { FirebaseContext } from '../firebase';
 
-//import Error404 from '../components/layout/404';
+import Error404 from '../components/layout/404';
 
 // validaciones
 import useValidacion from '../hooks/useValidacion';
@@ -103,7 +103,7 @@ const NuevoProducto = () => {
   return (
     <div>
       <Layout>
-        {/* {!usuario ? <Error404 /> : ( */}
+        {!usuario ? <Error404 /> : (
         <>
           <h1
             css={css`
@@ -208,7 +208,7 @@ const NuevoProducto = () => {
             />
           </Formulario>
         </>
-        {/* )} */}
+        )}
 
       </Layout>
     </div>
