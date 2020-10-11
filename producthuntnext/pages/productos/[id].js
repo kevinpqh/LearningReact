@@ -32,8 +32,8 @@ const Producto = () => {
   // state del componente
   const [producto, setProducto] = useState({});
   const [error, setError] = useState(false);
-  const [comentario, guardarComentario] = useState({});
-  const [consultarDB, guardarConsultarDB] = useState(true);
+  const [comentario, setComentario] = useState({});
+  const [consultarDB, setConsultarDB] = useState(true);
 
   // Routing para obtener el id actual
   const router = useRouter();
@@ -49,15 +49,15 @@ const Producto = () => {
         const producto = await productoQuery.get();
         if (producto.exists) {
           setProducto(producto.data());
-          //guardarConsultarDB(false);
+          setConsultarDB(false);
         } else {
           setError(true);
-          //guardarConsultarDB(false);
+          setConsultarDB(false);
         }
       }
       obtenerProducto();
     }
-  }, [id,producto]);
+  }, [id]);
 
   if (Object.keys(producto).length === 0 && !error) return 'Cargando...';
 
@@ -75,7 +75,7 @@ const Producto = () => {
     // Verificar si el usuario actual ha votado
     if (haVotado.includes(usuario.uid)) return;
 
-    // // guardar el ID del usuario que ha votado
+    // guardar el ID del usuario que ha votado
     const nuevoHaVotado = [...haVotado, usuario.uid];
 
     //  Actualizar en la BD
@@ -90,79 +90,79 @@ const Producto = () => {
       votos: nuevoTotal
     })
 
-    //guardarConsultarDB(true); // hay un voto, por lo tanto consultar a la BD
+    setConsultarDB(true); // hay un voto, por lo tanto consultar a la BD
   }
 
-  // // Funciones para crear comentarios
-  // const comentarioChange = e => {
-  //   guardarComentario({
-  //     ...comentario,
-  //     [e.target.name]: e.target.value
-  //   })
-  // }
+  // Funciones para crear comentarios
+  const comentarioChange = e => {
+    setComentario({
+      ...comentario,
+      [e.target.name]: e.target.value
+    })
+  }
 
-  // // Identifica si el comentario es del creador del producto
-  // const esCreador = id => {
-  //   if (creador.id == id) {
-  //     return true;
-  //   }
-  // }
+  // Identifica si el comentario es del creador del producto
+  const esCreador = id => {
+    if (creador.id == id) {
+      return true;
+    }
+  }
 
-  // const agregarComentario = e => {
-  //   e.preventDefault();
+  const agregarComentario = e => {
+    e.preventDefault();
 
-  //   if (!usuario) {
-  //     return router.push('/login')
-  //   }
+    if (!usuario) {
+      return router.push('/login')
+    }
 
-  //   // información extra al comentario
-  //   comentario.usuarioId = usuario.uid;
-  //   comentario.usuarioNombre = usuario.displayName;
+    // información extra al comentario
+    comentario.usuarioId = usuario.uid;
+    comentario.usuarioNombre = usuario.displayName;
 
-  //   // Tomar copia de comentarios y agregarlos al arreglo
-  //   const nuevosComentarios = [...comentarios, comentario];
+    // Tomar copia de comentarios y agregarlos al arreglo
+    const nuevosComentarios = [...comentarios, comentario];
 
-  //   // Actualizar la BD
-  //   firebase.db.collection('productos').doc(id).update({
-  //     comentarios: nuevosComentarios
-  //   })
+    // Actualizar la BD
+    firebase.db.collection('productos').doc(id).update({
+      comentarios: nuevosComentarios
+    })
 
-  //   // Actualizar el state
-  //   setProducto({
-  //     ...producto,
-  //     comentarios: nuevosComentarios
-  //   })
+    // Actualizar el state
+    setProducto({
+      ...producto,
+      comentarios: nuevosComentarios
+    })
 
-  //   guardarConsultarDB(true); // hay un COMENTARIO, por lo tanto consultar a la BD
-  // }
+    setConsultarDB(true); // hay un COMENTARIO, por lo tanto consultar a la BD
+  }
 
-  // // función que revisa que el creador del producto sea el mismo que esta autenticado
-  // const puedeBorrar = () => {
-  //   if (!usuario) return false;
+  // función que revisa que el creador del producto sea el mismo que esta autenticado
+  const puedeBorrar = () => {
+    if (!usuario) return false;
 
-  //   if (creador.id === usuario.uid) {
-  //     return true
-  //   }
-  // }
+    if (creador.id === usuario.uid) {
+      return true
+    }
+  }
 
-  // // elimina un producto de la bd
-  // const eliminarProducto = async () => {
+  // elimina un producto de la bd
+  const eliminarProducto = async () => {
 
-  //   if (!usuario) {
-  //     return router.push('/login')
-  //   }
+    if (!usuario) {
+      return router.push('/login')
+    }
 
-  //   if (creador.id !== usuario.uid) {
-  //     return router.push('/')
-  //   }
+    if (creador.id !== usuario.uid) {
+      return router.push('/')
+    }
 
-  //   try {
-  //     await firebase.db.collection('productos').doc(id).delete();
-  //     router.push('/')
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
+    try {
+      await firebase.db.collection('productos').doc(id).delete();
+      router.push('/')
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <Layout>
@@ -185,13 +185,13 @@ const Producto = () => {
                   <>
                     <h2>Agrega tu comentario</h2>
                     <form
-                      // onSubmit={agregarComentario}
+                      onSubmit={agregarComentario}
                     >
                       <Campo>
                         <input
                           type="text"
                           name="mensaje"
-                          // onChange={comentarioChange}
+                          onChange={comentarioChange}
                         />
                       </Campo>
                       <InputSubmit
@@ -200,31 +200,32 @@ const Producto = () => {
                       />
                     </form>
                   </>
-                 )}
+                )}
 
                 <h2 css={css`
                     margin: 2rem 0;
                 `}>Comentarios</h2>
 
-                {comentarios.length === 0 ? "Aún no hay comentarios" : (
-                  <ul>
-                    {comentarios.map((comentario, i) => (
-                      <li
-                        key={`${comentario.usuarioId}-${i}`}
-                        css={css`
+                {
+                  comentarios.length === 0 ? "Aún no hay comentarios" : (
+                    <ul>
+                      {comentarios.map((comentario, i) => (
+                        <li
+                          key={`${comentario.usuarioId}-${i}`}
+                          css={css`
                             border: 1px solid #e1e1e1;
                             padding: 2rem;
                         `}
-                      >
-                        <p>{comentario.mensaje}</p>
-                        <p>Escrito por:
+                        >
+                          <p>{comentario.mensaje}</p>
+                          <p>Escrito por:
                           <span css={css` font-weight:bold;`}>{''} {comentario.usuarioNombre}</span>
-                        </p>
-                        {/* { esCreador(comentario.usuarioId) && <CreadorProducto>Es Creador</CreadorProducto>} */}
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                          </p>
+                          { esCreador(comentario.usuarioId) && <CreadorProducto>Es Creador</CreadorProducto>}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
 
               </div>
 

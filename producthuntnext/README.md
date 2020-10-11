@@ -8,6 +8,13 @@ npx create-next-app producthuntnext
 ```
 npm i @emotion/core @emotion/styled babel-plugin-emotion @emotion/babel-preset-css-prop
 ```
+
+## Firebase
+```
+npm install -g firebase-tools
+```
+
+
 ## Getting Started
 
 First, run the development server:
